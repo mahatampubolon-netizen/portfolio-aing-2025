@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Natanael Mahanaim Tampubolon - 3D Rigging Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #345635;
+      --secondary-color: #6B8F71;
+      --accent-color: #AEC3B0;
+      --text-primary: #ffffff;
+      --text-secondary: #e2e8f0;
+      --text-muted: #dcdcdc;
+      --bg-primary: #0D2B1D;
+      --bg-secondary: #345635;
+      --bg-card: #6B8F71;
+      --gradient-1: linear-gradient(135deg, #345635 0%, #6B8F71 100%);
+      --gradient-2: linear-gradient(135deg, #6B8F71 0%, #AEC3B0 100%);
+      --gradient-3: linear-gradient(135deg, #AEC3B0 0%, #E3EFD3 100%);
+    }
+
+    [data-theme="light"] {
+      --text-primary: #0D2B1D;
+      --text-secondary: #345635;
+      --text-muted: #6B8F71;
+      --bg-primary: #E3EFD3;
+      --bg-secondary: #ffffff;
+      --bg-card: #f8faf8;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 1rem 0;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(20px);
+    }
+
+    nav.scrolled {
+      background: rgba(13, 43, 29, 0.9);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    [data-theme="light"] nav.scrolled {
+      background: rgba(227, 239, 211, 0.9);
+      border-bottom: 1px solid rgba(52, 86, 53, 0.2);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-color);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background: var(--gradient-1);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .theme-toggle {
+      background: var(--bg-card);
+      border: 2px solid rgba(52, 86, 53, 0.3);
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-color);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+    }
+
+    .theme-toggle:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: scale(1.1);
+      box-shadow: 0 4px 20px rgba(52, 86, 53, 0.3);
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      background: radial-gradient(ellipse at center, rgba(52, 86, 53, 0.15) 0%, transparent 70%);
+      overflow: hidden;
+    }
+
+    .floating-shape {
+      position: absolute;
+      opacity: 0.1;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .floating-shape:nth-child(1) {
+      top: 20%;
+      left: 10%;
+      width: 80px;
+      height: 80px;
+      background: var(--gradient-1);
+      border-radius: 50%;
+      animation-delay: 0s;
+    }
+
+    .floating-shape:nth-child(2) {
+      top: 60%;
+      right: 15%;
+      width: 60px;
+      height: 60px;
+      background: var(--gradient-2);
+      border-radius: 12px;
+      animation-delay: -2s;
+    }
+
+    .floating-shape:nth-child(3) {
+      bottom: 30%;
+      left: 20%;
+      width: 100px;
+      height: 100px;
+      background: var(--gradient-3);
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      animation-delay: -4s;
+    }
+
+    @keyframes float {
+      0%, 100% { 
+        transform: translateY(0px) rotate(0deg); 
+      }
+      50% { 
+        transform: translateY(-20px) rotate(180deg); 
+      }
+    }
+
+    .hero-3d-icon {
+      position: absolute;
+      top: 50%;
+      right: 10%;
+      transform: translateY(-50%);
+      font-size: 12rem;
+      color: var(--accent-color);
+      opacity: 0.15;
+      animation: rotate3d 12s linear infinite;
+    }
+
+    @keyframes rotate3d {
+      from { 
+        transform: translateY(-50%) rotateY(0deg); 
+      }
+      to { 
+        transform: translateY(-50%) rotateY(360deg); 
+      }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 0 2rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      animation: fadeInUp 1s ease-out 0.3s both;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 1s ease-out 0.6s both;
+    }
+
+    .btn {
+      padding: 0.875rem 2rem;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background: var(--gradient-1);
+      color: white;
+      box-shadow: 0 4px 20px rgba(52, 86, 53, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(52, 86, 53, 0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+    }
+
+    /* Sections */
+    section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 3rem;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* About Section */
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .about-image {
+      position: relative;
+    }
+
+    .about-image::before {
+      content: '';
+      position: absolute;
+      inset: -10px;
+      background: var(--gradient-1);
+      border-radius: 20px;
+      filter: blur(20px);
+      opacity: 0.3;
+      z-index: -1;
+    }
+
+    .profile-img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      border-radius: 15px;
+      background: var(--bg-card);
+      padding: 2rem;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .profile-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 15px;
+    }
+
+    .about-text {
+      color: var(--text-secondary);
+      font-size: 1.125rem;
+      line-height: 1.8;
+    }
+
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+
+    .skill-tag {
+      background: var(--bg-card);
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--primary-color);
+      border: 1px solid rgba(52, 86, 53, 0.3);
+    }
+
+    /* Portfolio Section */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .portfolio-item {
+      background: var(--bg-card);
+      border-radius: 15px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .portfolio-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .portfolio-image {
+      height: 250px;
+      background: var(--gradient-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portfolio-image.gradient-1 { background: var(--gradient-1); }
+    .portfolio-image.gradient-2 { background: var(--gradient-2); }
+    .portfolio-image.gradient-3 { background: var(--gradient-3); }
+    .portfolio-image.gradient-pink { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+    .portfolio-image.gradient-teal { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+    .portfolio-image.gradient-orange { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+
+    .portfolio-content {
+      padding: 1.5rem;
+    }
+
+    .portfolio-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .portfolio-description {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .portfolio-tags {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .portfolio-tag {
+      background: rgba(52, 86, 53, 0.15);
+      color: var(--primary-color);
+      padding: 0.25rem 0.75rem;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    /* Modal Styles */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: var(--bg-card);
+      border-radius: 20px;
+      width: 90%;
+      max-width: 1000px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      animation: modalSlideIn 0.4s ease-out;
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        transform: scale(0.8) translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal-header {
+      padding: 2rem 2rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--primary-color);
+      transform: rotate(90deg);
+    }
+
+    /* Image Carousel Styles */
+    .carousel-section {
+      position: relative;
+      background: var(--bg-secondary);
+      overflow: hidden;
+      min-height: 300px;
+    }
+
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      overflow: hidden;
+    }
+
+    .carousel-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.3s ease;
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-secondary);
+    }
+
+    .carousel-slide img,
+    .carousel-slide video {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    .carousel-slide video {
+      cursor: pointer;
+    }
+
+    .carousel-slide.empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-primary);
+      flex-direction: column;
+    }
+
+    .empty-carousel-icon {
+      font-size: 4rem;
+      color: var(--accent-color);
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    .empty-carousel-text {
+      color: var(--text-muted);
+      font-size: 1.125rem;
+      text-align: center;
+    }
+
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      border: none;
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .carousel-nav:hover {
+      background: rgba(0, 0, 0, 0.8);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .carousel-nav.prev {
+      left: 20px;
+    }
+
+    .carousel-nav.next {
+      right: 20px;
+    }
+
+    .carousel-nav:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .carousel-indicators {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+      z-index: 10;
+    }
+
+    .carousel-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-indicator.active {
+      background: white;
+      transform: scale(1.2);
+    }
+
+    .image-counter {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      z-index: 10;
+    }
+
+    .modal-description {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      padding: 2rem;
+      margin: 0;
+    }
+
+    /* Contact Section */
+    .contact-content {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-text {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 1.5rem;
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .contact-link:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      background: var(--bg-secondary);
+    }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 3000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .lightbox.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .lightbox-content {
+      max-width: 90%;
+      max-height: 90%;
+      position: relative;
+    }
+
+    .lightbox-media {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 10px;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -50px;
+      right: 0;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .about-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-links {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      section {
+        padding: 3rem 1rem;
+      }
+
+      .hero-3d-icon {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="nav-container">
+      <div class="logo">LUX</div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="floating-shape"></div>
+    <div class="floating-shape"></div>
+    <div class="floating-shape"></div>
+    <i class="fas fa-cube hero-3d-icon"></i>
+    
+    <div class="hero-content">
+      <h1 class="hero-title">Natanael Mahanaim Tampubolon</h1>
+      <p class="hero-subtitle">3D Rigger and Blendshape Artist</p>
+      <div class="hero-buttons">
+        <a href="#portfolio" class="btn btn-primary">
+          <i class="fas fa-eye"></i>
+          View My Works
+        </a>
+        <a href="#contact" class="btn btn-secondary">
+          <i class="fas fa-envelope"></i>
+          Get In Touch
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="fade-in">
+    <h2 class="section-title">About Me</h2>
+    <div class="about-content">
+      <div class="about-image">
+        <div class="profile-img">
+           <img src="images/profile.jpeg" alt="My Profile Photo" style="width: 100%; height: auto; border-radius: 15px; object-fit: cover;">
+        </div>
+      </div>
+      <div class="about-text">
+        <p>
+          I'm Natanael Mahanaim Tampubolon, a passionate and detail-driven 3D Rigger with hands-on experience in both Blender and Autodesk Maya. I specialize in building intuitive, animator-friendly rigs for characters, props, and creatures—bringing technical precision and creative flexibility to every project.
+        </p>
+        <p style="margin-top: 1rem;">
+          I'm a proud graduate of SMK Raden Umar Said, where I laid the foundation for my rigging and scripting journey. 
+          I've since completed an internship at RUS Animation, gaining valuable studio experience and collaborating on production-ready assets.
+        </p>
+        <div class="skills-list">
+          <span class="skill-tag">Blender</span>
+          <span class="skill-tag">Maya</span>
+          <span class="skill-tag">Prop Rigging</span>
+          <span class="skill-tag">Character Rigging</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Section -->
+  <section id="portfolio" class="fade-in">
+    <h2 class="section-title">My Works</h2>
+    <div class="portfolio-grid">
+      <div class="portfolio-item" data-modal="character-rigging">
+        <div class="portfolio-image">
+          <i class="fas fa-magic"></i>
+        </div>
+        <div class="portfolio-content">
+          <h3 class="portfolio-title">Character Rigging</h3>
+          <p class="portfolio-description">
+            Advanced character rigging with custom bone structures and intuitive controls for animators.
+          </p>
+          <div class="portfolio-tags">
+            <span class="portfolio-tag">Maya</span>
+            <span class="portfolio-tag">Rigging</span>
+            <span class="portfolio-tag">Animation</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-modal="quadruped-rigging">
+        <div class="portfolio-image gradient-3">
+          <i class="fas fa-mountain"></i>
+        </div>
+        <div class="portfolio-content">
+          <h3 class="portfolio-title">Quadruped Rigging</h3>
+          <p class="portfolio-description">
+            Immersive quadruped rigging systems with anatomically accurate joint placement and dynamic IK/FK blending.
+          </p>
+          <div class="portfolio-tags">
+            <span class="portfolio-tag">Blender</span>
+            <span class="portfolio-tag">Rigging</span>
+            <span class="portfolio-tag">Character</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-modal="showreel">
+        <div class="portfolio-image gradient-1">
+          <i class="fas fa-play-circle"></i>
+        </div>
+        <div class="portfolio-content">
+          <h3 class="portfolio-title">Showreel</h3>
+          <p class="portfolio-description">
+            Technical rigging and scripting showreel featuring anatomically precise character setups and custom automation tools.
+          </p>
+          <div class="portfolio-tags">
+            <span class="portfolio-tag">Animation</span>
+            <span class="portfolio-tag">Character</span>
+            <span class="portfolio-tag">Storytelling</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-modal="prop-rigging">
+        <div class="portfolio-image gradient-pink">
+          <i class="fas fa-cube"></i>
+        </div>
+        <div class="portfolio-content">
+          <h3 class="portfolio-title">Prop Rigging</h3>
+          <p class="portfolio-description">
+            High-quality prop rigs with precise control systems, clean hierarchy, and optimized deformation setups.
+          </p>
+          <div class="portfolio-tags">
+            <span class="portfolio-tag">Rigging</span>
+            <span class="portfolio-tag">Modelling</span>
+            <span class="portfolio-tag">Prop</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-modal="scripting">
+        <div class="portfolio-image gradient-teal">
+          <i class="fas fa-gamepad"></i>
+        </div>
+        <div class="portfolio-content">
+          <h3 class="portfolio-title">Scripting</h3>
+          <p class="portfolio-description">
+            Optimized scripts to support 3D Rigging in Maya and Blender for enhanced workflow automation.
+          </p>
+          <div class="portfolio-tags">
+            <span class="portfolio-tag">Python</span>
+            <span class="portfolio-tag">Maya</span>
+            <span class="portfolio-tag">Optimization</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-modal="certificate">
+        <div class="portfolio-image gradient-orange">
+          <i class="fas fa-film"></i>
+        </div>
+        <div class="portfolio-content">
+          <h3 class="portfolio-title">Certificate</h3>
+          <p class="portfolio-description">
+            Certificates for all the 3D competitions that Maha has participated in.
+          </p>
+          <div class="portfolio-tags">
+            <span class="portfolio-tag">Rigging</span>
+            <span class="portfolio-tag">3D</span>
+            <span class="portfolio-tag">Certificate</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="fade-in">
+    <h2 class="section-title">Let's Connect</h2>
+    <div class="contact-content">
+      <p class="contact-text">
+        Ready to bring your vision to life? Let's discuss how we can create something amazing together.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:mahatampubolon@gmail.com" class="contact-link">
+          <i class="fas fa-envelope"></i>
+          mahatampubolon@gmail.com
+        </a>
+        <a href="https://www.linkedin.com/in/natanael-tampubolon-849990339" target="_blank" class="contact-link">
+          <i class="fab fa-linkedin"></i>
+          LinkedIn
+        </a>
+        <a href="https://github.com/oceanthesea1" target="_blank" class="contact-link">
+          <i class="fab fa-github"></i>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Natanael Mahanaim Tampubolon. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Modal -->
+  <div class="modal" id="portfolioModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">Project Title</h2>
+        <button class="modal-close" id="modalClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <!-- Image Carousel -->
+      <div class="carousel-section">
+        <div class="carousel-container">
+          <div class="carousel-track" id="carouselTrack">
+            <div class="carousel-slide empty">
+              <div class="empty-carousel-icon">
+                <i class="fas fa-images"></i>
+              </div>
+              <div class="empty-carousel-text">
+                Click here to view sample images<br>
+                <small>or upload your own images to customize</small>
+              </div>
+            </div>
+          </div>
+          
+          <button class="carousel-nav prev" id="prevBtn">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="carousel-nav next" id="nextBtn">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+          
+          <div class="carousel-indicators" id="carouselIndicators"></div>
+          <div class="image-counter" id="imageCounter">0 / 0</div>
+        </div>
+      </div>
+      
+      <!-- Description -->
+      <div class="modal-description" id="modalDescription">
+        Project description will appear here.
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightboxClose">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="lightbox-media" id="lightboxMedia"></div>
+    </div>
+  </div>
+
+  <script>
+    // Function to check if file is video
+    function isVideoFile(filename) {
+      const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov', '.avi', '.mkv'];
+      return videoExtensions.some(ext => filename.toLowerCase().endsWith(ext));
+    }
+
+    // Function to check if file is image
+    function isImageFile(filename) {
+      const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.bmp'];
+      return imageExtensions.some(ext => filename.toLowerCase().endsWith(ext));
+    }
+
+    // Project data with sample placeholder images and videos
+    const projects = {
+      'character-rigging': {
+        title: 'Character Rigging',
+        description: 'Advanced character rigging projects featuring sophisticated bone structures, custom controls, and animator-friendly interfaces. These rigs include facial rigging systems, advanced deformation setups, and optimized performance for real-time animation workflows.',
+        images: [
+          'images/character-rigging/mia.jpg',
+          'images/character-rigging/bdel.jpg',
+          'images/character-rigging/htao.jpg',
+          'images/character-rigging/kito.jpg',
+          'images/character-rigging/beswan1.jpg',
+          'images/character-rigging/bswan2.jpg',
+          'images/character-rigging/bung.jpg',
+          'images/character-rigging/dadangsukses.jpg',
+          'images/character-rigging/hutdj1.jpg',
+          'images/character-rigging/htdj2.jpg',
+          'images/character-rigging/nyla02.jpg',
+          'images/character-rigging/yahya.jpg',
+          'images/character-rigging/pyhy.jpg'
+        ]
+      },
+      'quadruped-rigging': {
+        title: 'Quadruped Rigging',
+        description: 'Specialized quadruped rigging systems designed for animals and creatures. These rigs feature anatomically accurate joint placement, dynamic IK/FK switching, and natural locomotion systems.',
+        images: [
+          'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop',
+          'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=600&h=400&fit=crop'
+        ]
+      },
+      'showreel': {
+        title: 'Technical Showreel',
+        description: 'A comprehensive showcase of technical rigging capabilities, featuring complex character setups, automation tools, and advanced rigging techniques in both Blender and Maya.',
+        images: [
+          'showreel/MahaShowreel.mp4',
+          'showreel/ShowreelFINAL.mp4'
+        ]
+      },
+      'prop-rigging': {
+        title: 'Prop Rigging',
+        description: 'High-quality prop rigging projects featuring mechanical objects, vehicles, and interactive elements with precise control systems and optimized deformation setups.',
+        images: [
+          'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=600&h=400&fit=crop',
+          'images/character-rigging/mia.jpg'
+        ]
+      },
+      'scripting': {
+        title: 'Rigging Scripts & Tools',
+        description: 'Custom Python scripts and tools developed to enhance 3D rigging workflows in Maya and Blender. These automation tools streamline repetitive tasks and improve efficiency.',
+        images: [
+          'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop',
+          'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=600&h=400&fit=crop'
+        ]
+      },
+      'certificate': {
+        title: 'Certificates & Achievements',
+        description: 'A collection of certificates and achievements from 3D competitions, workshops, and professional development courses in character rigging and animation.',
+        images: [
+          'images/character-rigging/mia.jpg',
+          'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop'
+        ]
+      }
+    };
+
+    // Initialize variables
+    const modal = document.getElementById('portfolioModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDescription = document.getElementById('modalDescription');
+    const modalClose = document.getElementById('modalClose');
+    const carouselTrack = document.getElementById('carouselTrack');
+    const carouselIndicators = document.getElementById('carouselIndicators');
+    const imageCounter = document.getElementById('imageCounter');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxMedia = document.getElementById('lightboxMedia');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const themeToggle = document.getElementById('themeToggle');
+
+    let currentProject = '';
+    let currentSlide = 0;
+
+    // Theme toggle
+    const html = document.documentElement;
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    html.setAttribute('data-theme', currentTheme);
+    themeToggle.querySelector('i').className = currentTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      themeToggle.querySelector('i').className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 100);
+    });
+
+    // Fade in animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Portfolio modal functionality
+    document.querySelectorAll('.portfolio-item').forEach(item => {
+      item.addEventListener('click', () => {
+        currentProject = item.dataset.modal;
+        currentSlide = 0;
+        const project = projects[currentProject];
+        
+        modalTitle.textContent = project.title;
+        modalDescription.textContent = project.description;
+        
+        renderCarousel();
+        
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    // Modal close
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    function closeModal() {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+      // Pause any videos when modal closes
+      const videos = modal.querySelectorAll('video');
+      videos.forEach(video => {
+        video.pause();
+      });
+    }
+
+    // Carousel functionality
+    function renderCarousel() {
+      const project = projects[currentProject];
+      const images = project?.images || [];
+      carouselTrack.innerHTML = '';
+      
+      if (images.length === 0) {
+        carouselTrack.innerHTML = `
+          <div class="carousel-slide empty">
+            <div class="empty-carousel-icon">
+              <i class="fas fa-images"></i>
+            </div>
+            <div class="empty-carousel-text">
+              No media available<br>
+              <small>Sample images and videos will be loaded here</small>
+            </div>
+          </div>
+        `;
+        updateCarouselControls(0, 0);
+        return;
+      }
+      
+      images.forEach((mediaSrc, index) => {
+        const slide = document.createElement('div');
+        slide.className = 'carousel-slide';
+        
+        if (isVideoFile(mediaSrc)) {
+          slide.innerHTML = `
+            <video controls preload="metadata" style="max-width: 100%; max-height: 100%; border-radius: 8px;">
+              <source src="${mediaSrc}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          `;
+        } else {
+          slide.innerHTML = `<img src="${mediaSrc}" alt="Project media ${index + 1}" loading="lazy">`;
+        }
+        
+        // Add click handler for lightbox
+        slide.addEventListener('click', (e) => {
+          // Don't open lightbox if clicking on video controls
+          if (e.target.tagName.toLowerCase() !== 'video') {
+            openLightbox(mediaSrc);
+          }
+        });
+        
+        carouselTrack.appendChild(slide);
+      });
+      
+      updateCarouselControls(images.length, currentSlide);
+      updateCarouselPosition();
+    }
+
+    function updateCarouselControls(totalImages, current) {
+      imageCounter.textContent = totalImages > 0 ? `${current + 1} / ${totalImages}` : '0 / 0';
+      
+      prevBtn.disabled = current <= 0 || totalImages === 0;
+      nextBtn.disabled = current >= totalImages - 1 || totalImages === 0;
+      
+      carouselIndicators.innerHTML = '';
+      if (totalImages > 1) {
+        for (let i = 0; i < totalImages; i++) {
+          const indicator = document.createElement('div');
+          indicator.className = `carousel-indicator ${i === current ? 'active' : ''}`;
+          indicator.addEventListener('click', () => goToSlide(i));
+          carouselIndicators.appendChild(indicator);
+        }
+      }
+    }
+
+    function updateCarouselPosition() {
+      carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+      
+      // Pause all videos when sliding
+      const videos = carouselTrack.querySelectorAll('video');
+      videos.forEach((video, index) => {
+        if (index !== currentSlide) {
+          video.pause();
+        }
+      });
+    }
+
+    function goToSlide(index) {
+      const project = projects[currentProject];
+      const images = project?.images || [];
+      if (index >= 0 && index < images.length) {
+        currentSlide = index;
+        updateCarouselControls(images.length, currentSlide);
+        updateCarouselPosition();
+      }
+    }
+
+    // Navigation
+    prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
+    nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+
+    // Lightbox
+    function openLightbox(mediaSrc) {
+      lightboxMedia.innerHTML = '';
+      
+      if (isVideoFile(mediaSrc)) {
+        lightboxMedia.innerHTML = `
+          <video controls autoplay style="max-width: 100%; max-height: 100%; border-radius: 10px;">
+            <source src="${mediaSrc}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        `;
+      } else {
+        lightboxMedia.innerHTML = `<img src="${mediaSrc}" alt="Lightbox media" style="max-width: 100%; max-height: 100%; border-radius: 10px;">`;
+      }
+      
+      lightbox.classList.add('active');
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      // Pause video in lightbox when closing
+      const video = lightboxMedia.querySelector('video');
+      if (video) {
+        video.pause();
+      }
+    }
+
+    // Keyboard controls
+    document.addEventListener('keydown', (e) => {
+      if (modal.classList.contains('active')) {
+        if (e.key === 'Escape') {
+          if (lightbox.classList.contains('active')) {
+            closeLightbox();
+          } else {
+            closeModal();
+          }
+        } else if (e.key === 'ArrowLeft') {
+          if (!lightbox.classList.contains('active')) {
+            goToSlide(currentSlide - 1);
+          }
+        } else if (e.key === 'ArrowRight') {
+          if (!lightbox.classList.contains('active')) {
+            goToSlide(currentSlide + 1);
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
