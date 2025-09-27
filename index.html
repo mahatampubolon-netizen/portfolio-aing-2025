@@ -26,6 +26,7 @@
       --gradient-1: linear-gradient(135deg, #345635 0%, #6B8F71 100%);
       --gradient-2: linear-gradient(135deg, #6B8F71 0%, #AEC3B0 100%);
       --gradient-3: linear-gradient(135deg, #AEC3B0 0%, #E3EFD3 100%);
+      --theme-transition-duration: 0.6s;
     }
 
     [data-theme="light"] {
@@ -40,13 +41,54 @@
     body {
       font-family: 'Inter', sans-serif;
       background: var(--bg-primary);
+      background-image: 
+        linear-gradient(rgba(52, 86, 53, 0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(52, 86, 53, 0.15) 1px, transparent 1px);
+      background-size: 30px 30px;
       color: var(--text-primary);
       line-height: 1.6;
       overflow-x: hidden;
+      position: relative;
+      transition: all 0.5s ease;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 50% 50%, transparent 25%, rgba(13, 43, 29, 0.3) 45%, rgba(13, 43, 29, 0.7) 65%, var(--bg-primary) 85%);
+      pointer-events: none;
+      z-index: 1;
+      transition: all 0.5s ease;
+    }
+
+    body > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    [data-theme="light"] body {
+      background-image: 
+        linear-gradient(rgba(52, 86, 53, 0.2) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(52, 86, 53, 0.2) 1px, transparent 1px);
+    }
+
+    [data-theme="light"] body::before {
+      background: 
+        radial-gradient(circle at 50% 50%, transparent 25%, rgba(227, 239, 211, 0.3) 45%, rgba(227, 239, 211, 0.7) 65%, var(--bg-primary) 85%);
     }
 
     html {
       scroll-behavior: smooth;
+      transition: all 0.5s ease;
+    }
+
+    * {
+      transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
     }
 
     /* Navigation */
@@ -134,6 +176,17 @@
       cursor: pointer;
       transition: all 0.3s ease;
       font-size: 1.1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .theme-toggle i {
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-origin: center;
+    }
+
+    .theme-toggle.rotating i {
+      transform: rotate(360deg);
     }
 
     .theme-toggle:hover {
@@ -209,6 +262,42 @@
       color: var(--accent-color);
       opacity: 0.15;
       animation: rotate3d 12s linear infinite;
+    }
+
+    /* Maya Joint Icon */
+    .hero-maya-joint {
+      position: absolute;
+      top: 30%;
+      left: 15%;
+      transform: translateY(-50%);
+      width: 80px;
+      height: 80px;
+      opacity: 0.1;
+      animation: float 8s ease-in-out infinite;
+      animation-delay: -1s;
+    }
+
+    .hero-maya-joint::before {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: var(--accent-color);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .hero-maya-joint::after {
+      content: '';
+      position: absolute;
+      width: 3px;
+      height: 40px;
+      background: var(--accent-color);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
     }
 
     @keyframes rotate3d {
@@ -783,6 +872,78 @@
       }
     }
 
+    /* Skills Section */
+    .skills-table {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .skills-column {
+      background: var(--bg-card);
+      padding: 2rem;
+      border-radius: 15px;
+      border: 1px solid rgba(52, 86, 53, 0.2);
+    }
+
+    .skills-category {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+      text-align: center;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .skill-item {
+      margin-bottom: 1.2rem;
+    }
+
+    .skill-name {
+      display: block;
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .skill-bar {
+      background: rgba(52, 86, 53, 0.2);
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .skill-progress {
+      height: 100%;
+      background: var(--gradient-1);
+      border-radius: 4px;
+      transition: width 1.5s ease-in-out;
+      position: relative;
+    }
+
+    .skill-progress::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 30px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4));
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-30px); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateX(30px); opacity: 0; }
+    }
+
     .fade-in {
       opacity: 0;
       transform: translateY(30px);
@@ -809,6 +970,11 @@
         grid-template-columns: 1fr;
       }
 
+      .skills-table {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
       .contact-links {
         flex-direction: column;
         align-items: center;
@@ -819,6 +985,10 @@
       }
 
       .hero-3d-icon {
+        display: none;
+      }
+
+      .hero-maya-joint {
         display: none;
       }
     }
@@ -847,6 +1017,7 @@
     <div class="floating-shape"></div>
     <div class="floating-shape"></div>
     <i class="fas fa-cube hero-3d-icon"></i>
+    <div class="hero-maya-joint"></div>
     
     <div class="hero-content">
       <h1 class="hero-title">Natanael Mahanaim Tampubolon</h1>
@@ -999,6 +1170,90 @@
     </div>
   </section>
 
+  <!-- Skills Section -->
+  <section id="skills" class="fade-in">
+    <h2 class="section-title">Skills</h2>
+    <div class="skills-table">
+      <div class="skills-column">
+        <h3 class="skills-category">Software</h3>
+        <div class="skill-item">
+          <span class="skill-name">Blender</span>
+          <div class="skill-bar">
+            <div class="skill-progress" style="width: 90%"></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Maya</span>
+          <div class="skill-bar">
+            <div class="skill-progress" style="width: 80%"></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Python</span>
+          <div class="skill-bar">
+            <div class="skill-progress" style="width: 35%"></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="skills-column">
+        <h3 class="skills-category">Real Life Skills</h3>
+        <div class="skill-item">
+          <span class="skill-name">Communication</span>
+          <div class="skill-bar">
+            <div class="skill-progress" style="width: 95%"></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Problem Solving</span>
+          <div class="skill-bar">
+            <div class="skill-progress" style="width: 88%"></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Critical Thinking</span>
+          <div class="skill-bar">
+            <div class="skill-progress" style="width: 85%"></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Time Management</span>
+          <div class="skill-bar">
+            <div class="skill-progress" style="width: 90%"></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Team Working</span>
+          <div class="skill-bar">
+            <div class="skill-progress" style="width: 100%"></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="skills-column">
+        <h3 class="skills-category">Languages</h3>
+        <div class="skill-item">
+          <span class="skill-name">Japanese</span>
+          <div class="skill-bar">
+            <div class="skill-progress" style="width: 60%"></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">English</span>
+          <div class="skill-bar">
+            <div class="skill-progress" style="width: 85%"></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Bahasa Indonesia</span>
+          <div class="skill-bar">
+            <div class="skill-progress" style="width: 100%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Contact Section -->
   <section id="contact" class="fade-in">
     <h2 class="section-title">Let's Connect</h2>
@@ -1103,6 +1358,26 @@
       return imageExtensions.some(ext => filename.toLowerCase().endsWith(ext));
     }
 
+    // Function to check if URL is YouTube embed
+    function isYouTubeEmbed(url) {
+      return url.includes('youtube.com/embed/') || url.includes('youtu.be/');
+    }
+
+    // Function to check if URL is Google Drive embed
+    function isGoogleDriveEmbed(url) {
+      return url.includes('drive.google.com') && (url.includes('/preview') || url.includes('/view'));
+    }
+
+    // Function to check if URL is YouTube embed
+    function isYouTubeEmbed(url) {
+      return url.includes('youtube.com/embed/') || url.includes('youtu.be/');
+    }
+
+    // Function to check if URL is Google Drive embed
+    function isGoogleDriveEmbed(url) {
+      return url.includes('drive.google.com') && (url.includes('/preview') || url.includes('/view'));
+    }
+
     // Project data with sample placeholder images and videos
     const projects = {
       'character-rigging': {
@@ -1137,7 +1412,7 @@
         title: 'Technical Showreel',
         description: 'A comprehensive showcase of technical rigging capabilities, featuring complex character setups, automation tools, and advanced rigging techniques in both Blender and Maya.',
         images: [
-          'showreel/ShowreelFINAL.mp4'
+          'https://www.youtube.com/embed/g4gpzM8gT1c?enablejsapi=1&origin=localhost'
         ]
       },
       'prop-rigging': {
@@ -1192,7 +1467,21 @@
     themeToggle.querySelector('i').className = currentTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
 
     themeToggle.addEventListener('click', () => {
-      const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      // Add rotation animation to the toggle button
+      themeToggle.classList.add('rotating');
+      setTimeout(() => {
+        themeToggle.classList.remove('rotating');
+      }, 600);
+      
+      // Add subtle opacity effect during transition
+      document.body.setAttribute('data-theme-changing', newTheme);
+      setTimeout(() => {
+        document.body.removeAttribute('data-theme-changing');
+      }, 600);
+      
       html.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
       themeToggle.querySelector('i').className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
@@ -1250,10 +1539,19 @@
     function closeModal() {
       modal.classList.remove('active');
       document.body.style.overflow = '';
+      
       // Pause any videos when modal closes
       const videos = modal.querySelectorAll('video');
       videos.forEach(video => {
         video.pause();
+      });
+      
+      // Stop YouTube videos by reloading iframe src
+      const iframes = modal.querySelectorAll('iframe[src*="youtube.com"]');
+      iframes.forEach(iframe => {
+        const src = iframe.src;
+        iframe.src = '';
+        iframe.src = src;
       });
     }
 
@@ -1283,7 +1581,32 @@
         const slide = document.createElement('div');
         slide.className = 'carousel-slide';
         
-        if (isVideoFile(mediaSrc)) {
+        console.log('Media src:', mediaSrc); // Debug log
+        console.log('Is YouTube:', isYouTubeEmbed(mediaSrc)); // Debug log
+        
+        if (isYouTubeEmbed(mediaSrc)) {
+          slide.innerHTML = `
+            <iframe 
+              width="100%" 
+              height="100%" 
+              src="${mediaSrc}" 
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen
+              style="max-width: 100%; max-height: 100%; border-radius: 8px;">
+            </iframe>
+          `;
+        } else if (isGoogleDriveEmbed(mediaSrc)) {
+          slide.innerHTML = `
+            <iframe 
+              width="100%" 
+              height="100%" 
+              src="${mediaSrc}" 
+              frameborder="0"
+              style="max-width: 100%; max-height: 100%; border-radius: 8px;">
+            </iframe>
+          `;
+        } else if (isVideoFile(mediaSrc)) {
           slide.innerHTML = `
             <video controls preload="metadata" style="max-width: 100%; max-height: 100%; border-radius: 8px;">
               <source src="${mediaSrc}" type="video/mp4">
@@ -1296,8 +1619,8 @@
         
         // Add click handler for lightbox
         slide.addEventListener('click', (e) => {
-          // Don't open lightbox if clicking on video controls
-          if (e.target.tagName.toLowerCase() !== 'video') {
+          // Don't open lightbox if clicking on video controls or iframe
+          if (e.target.tagName.toLowerCase() !== 'video' && e.target.tagName.toLowerCase() !== 'iframe') {
             openLightbox(mediaSrc);
           }
         });
@@ -1356,7 +1679,29 @@
     function openLightbox(mediaSrc) {
       lightboxMedia.innerHTML = '';
       
-      if (isVideoFile(mediaSrc)) {
+      if (isYouTubeEmbed(mediaSrc)) {
+        lightboxMedia.innerHTML = `
+          <iframe 
+            width="100%" 
+            height="100%" 
+            src="${mediaSrc}" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen
+            style="max-width: 100%; max-height: 100%; border-radius: 10px;">
+          </iframe>
+        `;
+      } else if (isGoogleDriveEmbed(mediaSrc)) {
+        lightboxMedia.innerHTML = `
+          <iframe 
+            width="100%" 
+            height="100%" 
+            src="${mediaSrc}" 
+            frameborder="0"
+            style="max-width: 100%; max-height: 100%; border-radius: 10px;">
+          </iframe>
+        `;
+      } else if (isVideoFile(mediaSrc)) {
         lightboxMedia.innerHTML = `
           <video controls autoplay style="max-width: 100%; max-height: 100%; border-radius: 10px;">
             <source src="${mediaSrc}" type="video/mp4">
@@ -1377,10 +1722,19 @@
 
     function closeLightbox() {
       lightbox.classList.remove('active');
+      
       // Pause video in lightbox when closing
       const video = lightboxMedia.querySelector('video');
       if (video) {
         video.pause();
+      }
+      
+      // Stop YouTube videos in lightbox
+      const iframe = lightboxMedia.querySelector('iframe[src*="youtube.com"]');
+      if (iframe) {
+        const src = iframe.src;
+        iframe.src = '';
+        iframe.src = src;
       }
     }
 
